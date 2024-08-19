@@ -9,8 +9,8 @@ def test_valid_segmentation():
                       processing.preproccess,
                       processing.postprocess)
     
-    inp_img = cv2.imread('data/raw_images/img_7020570882494955597.jpg')[:, :, ::-1]
+    inp_img = cv2.imread('data/raw_images/img_7020570882494955554.jpg')[:, :, ::-1]
     result = model(inp_img)
-    cv2.imwrite("tmp/segmentation_test.jpg", result)
+    cv2.imwrite("tmp/segmentation_test.jpg", result[:, :, ::-1])
     assert result is not None
 

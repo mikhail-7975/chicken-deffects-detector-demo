@@ -22,6 +22,8 @@ class UnetModel:
             raise Exception("UnetModel: postprocessing is not defined")
 
         input_data = self.preprocessing(input_image)
-        model_out = self.session.run(None, {self.input_name: input_data})
-        result = self.preprocessing(model_out)
+        if input_data.max() == 0:
+            raise Exception("UnetModel: zero value input")
+        model_out = self.session.run(None, {self.input_name: input_data})[0]
+        result = self.postprocessing(model_out, input_image)
         return result
