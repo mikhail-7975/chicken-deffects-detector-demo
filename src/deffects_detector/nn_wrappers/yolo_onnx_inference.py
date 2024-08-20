@@ -47,7 +47,7 @@ class Yolov8Onnx:
         scores = []
         class_ids = []
 
-        img_width, img_height, ch = input_image.shape
+        img_height, img_width, ch = input_image.shape
         x_factor = img_width / self.input_width
         y_factor = img_height / self.input_height
 
@@ -92,5 +92,5 @@ class Yolov8Onnx:
 
         img_data = self.preprocess(image)
         outputs = self.session.run(None, {self.model_inputs[0].name: img_data})
-        detection_result = self.postprocess(image, outputs, draw_deffects=False)  # output image
+        detection_result = self.postprocess(image, outputs, draw_deffects=False) 
         return detection_result
