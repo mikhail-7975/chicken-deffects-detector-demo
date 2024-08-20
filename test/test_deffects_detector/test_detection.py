@@ -6,7 +6,7 @@ import numpy as np
 from src.deffects_detector.nn_wrappers.yolo_onnx_inference import Yolov8Onnx
 from src.deffects_detector.utils.highlight import draw_detections
 
-def test_valid_segmentation():
+def test_valid_detection():
     model = Yolov8Onnx('data/model_weights/yolov8_640x640_chicken_deffects_base.onnx', 
                        confidence_thres=0.05, 
                        iou_thres=0.2)

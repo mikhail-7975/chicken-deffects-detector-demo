@@ -17,7 +17,7 @@ class Yolov8Onnx:
 
         # Load the class names from the COCO dataset
         self.classes = [str(i) for i in range(10)]
-        self.session = ort.InferenceSession(self.onnx_model, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
+        self.session = ort.InferenceSession(self.onnx_model, providers=["CPUExecutionProvider"])
         
         self.model_inputs = self.session.get_inputs()
         input_shape = self.model_inputs[0].shape
