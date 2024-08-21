@@ -5,7 +5,7 @@ from src.deffects_detector.data_processing.central_body_segmentation import Body
 
 def test_valid_segmentation():
     processing = BodySegmentationProcessing()
-    model = UnetModel('data/model_weights/unet_50_epoch_all_classes.onnx',
+    model = UnetModel('data/model_weights/unet_500_imgs_50_epoch_all_classes.onnx',
                       processing.preproccess,
                       processing.postprocess)
     

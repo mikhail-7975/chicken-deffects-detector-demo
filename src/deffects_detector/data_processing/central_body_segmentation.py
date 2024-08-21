@@ -6,8 +6,10 @@ from .prepostprocessing_base import ProcessingBase
 
 class BodySegmentationProcessing(ProcessingBase):
     def __init__(self):
+        self.nn_inp_height = 704
+        self.nn_inp_width = 544
         self.transforms = A.Compose([
-            A.Resize(128, 128),
+            A.Resize(self.nn_inp_height, self.nn_inp_width),
             A.Normalize(),
         ])
     
@@ -42,10 +44,10 @@ class BodySegmentationProcessing(ProcessingBase):
         if input_image is None:
             raise Exception("BodySegmentationProcessing: input_image is None")
 
-        binary = (heatmap > 0.5).astype(np.uint8)
+        binary = (heatmap > 0.2).astype(np.uint8)
         contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         largest_contour = max(contours, key=cv2.contourArea)
-        largest_contour = largest_contour / (128, 128)
+        largest_contour = largest_contour / (self.nn_inp_width, self.nn_inp_height)
         largest_contour *= (519, 695)
         largest_contour = largest_contour.astype(np.int32)
 

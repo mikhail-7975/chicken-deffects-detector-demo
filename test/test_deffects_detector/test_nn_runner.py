@@ -9,7 +9,7 @@ from src.deffects_detector.utils.highlight import draw_detections
 
 def test_valid_nn_runner():
     runner = NNRunner(
-        body_segmentation_model_path='data/model_weights/unet_50_epoch_all_classes.onnx',
+        body_segmentation_model_path='data/model_weights/unet_500_imgs_50_epoch_all_classes.onnx',
         hematomes_segmentation_model_path='',
         deffects_detection_model_path='data/model_weights/yolov8_640x640_chicken_deffects_base.onnx',
     )
