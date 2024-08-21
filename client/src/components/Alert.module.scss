@@ -1,0 +1,20 @@
+.alert {
+  &:global(.ant-alert) {
+    border-radius: 0;
+  }
+
+  &:global(.ant-alert-success) :global(.ant-alert-message) {
+    color: #417505;
+  }
+
+  &:global(.ant-alert-warning .ant-alert-message) {
+    color: #8a704d;
+  }
+
+  &:global(.ant-alert-error .ant-alert-message) {
+    color: #902828;
+  }
+}
+
+
+

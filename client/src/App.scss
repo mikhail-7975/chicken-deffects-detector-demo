@@ -1,0 +1,96 @@
+#root {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 50px 1fr 65px;
+}
+
+.App-header {
+  background-color: #15221F;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  text-transform: uppercase;
+  color: white;
+}
+
+main {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+footer {
+  background-color: #888888;
+  color: #15221F;
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigationPanel {
+  margin: 30px 0;
+
+  .tabs {
+    padding-bottom: 1px;
+    display: flex;
+    justify-content: center;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+
+.resultPanel {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.leftBlock {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.centerBlock {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 650px;
+  /*height: 950px;*/
+  border: #888888 1px solid;
+  margin: 0 35px;
+  text-align: left;
+}
+
+.rightBlock {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.resultBlock > h3, .centerBlock > h3 {
+  margin-left: 25px;
+  color: #888888;
+  text-transform: uppercase;
+}
+
+.resultBlock {
+  text-align: left;
+  width: 450px;
+  height: 140px;
+  border: #888888 1px solid;
+}
