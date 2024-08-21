@@ -36,8 +36,19 @@ def test_valid_detection():
         (255, 255, 255),
         (127, 127, 255),
     ]
+    detect_names = [
+            "",
+            "body",
+            "leg fixed",
+            "leg not fixed",
+            "normal wing",
+            "closed break",
+            "open break",
+            "hematome"
+        ]
     # plt.imshow(inp_img)
     for res in result:
-        draw_detections(inp_img, res['box'], float(res['score']), int(res['class_id']), color_palette)
+        draw_detections(inp_img, res['box'], float(res['score']), int(res['class_id']), 
+                        color_palette, detect_names)
     
     cv2.imwrite("tmp/detection_test.jpg", inp_img)

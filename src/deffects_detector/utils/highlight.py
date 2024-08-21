@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 
-def draw_detections(img, box, score, class_id, color_palette):
+def draw_detections(img, box, score, class_id, 
+                    color_palette, class_names):
     """
     Draws bounding boxes and labels on the input image based on the detected objects.
 
@@ -17,7 +18,7 @@ def draw_detections(img, box, score, class_id, color_palette):
     x1, y1, w, h = box
     color = color_palette[class_id]
     cv2.rectangle(img, (int(x1), int(y1)), (int(x1 + w), int(y1 + h)), color, 2)
-    label = f"{class_id}: {score:.2f}"
+    label = f"{class_names[class_id]}"
     (label_width, label_height), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
     label_x = x1
     label_y = y1 - 10 if y1 - 10 > label_height else y1 + 10

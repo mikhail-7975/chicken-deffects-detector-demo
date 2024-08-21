@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -12,22 +13,36 @@ def test_valid_nn_runner():
         hematomes_segmentation_model_path='',
         deffects_detection_model_path='data/model_weights/yolov8_640x640_chicken_deffects_base.onnx',
     )
-    inp_img = cv2.imread('data/raw_images/img_7020570882494759032.jpg')
-    result = runner(inp_img[:, :, ::-1])
-    assert result is not None
-    out_image, detection_result = result
-    color_palette = [
-        (0, 0, 0),
-        (255, 255, 255),
-        (0, 255, 0),
-        (255, 255, 0),
-        (255, 0, 0),
-        (255, 0, 255),
-        (255, 255, 255),
-        (127, 127, 255),
-    ]
-    # plt.imshow(inp_img)
-    for res in detection_result:
-        draw_detections(out_image, res['box'], res['score'], res['class_id'], color_palette)
-    
-    cv2.imwrite("tmp/nn_runner_test.jpg", out_image[:, :, ::-1])
+    test_images = list(map(str, Path('data/raw_images').glob("*.jpg")))
+    for img_path in test_images:
+        inp_img = cv2.imread(img_path)
+        result = runner(inp_img[:, :, ::-1])
+        assert result is not None
+        out_image, detection_result = result
+        color_palette = [
+            (0, 0, 0),
+            (255, 255, 255), # chicken_body
+            (0, 255, 0), #leg fixed
+            (255, 255, 0), # leg not fixed
+            (0, 255, 0), # normal wing
+            (255, 255, 0), # closed break
+            (255, 0, 0), # open break
+            (255, 0, 255), # hematome
+        ]
+        # plt.imshow(inp_img)
+        detect_names = [
+            "",
+            "body",
+            "leg fixed",
+            "leg not fixed",
+            "normal wing",
+            "closed break",
+            "open break",
+            "hematome"
+        ]
+
+        for res in detection_result:
+            draw_detections(out_image, res['box'], res['score'], res['class_id'], 
+                            color_palette, detect_names)
+        
+        cv2.imwrite(f"tmp/nn_runner_test_{img_path.split('_')[-1]}", out_image[:, :, ::-1])
