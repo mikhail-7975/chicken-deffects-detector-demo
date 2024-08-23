@@ -8,10 +8,6 @@ import zmq
 context = zmq.Context()
 
 #  Socket to talk to server
-print("Connecting to hello world server...")
-socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:5555")
-
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -22,17 +18,9 @@ def root():
 @app.route('/post-example', methods=['POST'])
 def hello_world():
     query_params = request.args.to_dict()
-    
-    # Parse form data
     form_data = request.form.to_dict()
-    
-    # Parse JSON payload
     json_data = request.get_json(silent=True)
-    
-    # Parse headers
     headers = dict(request.headers)
-    
-    # Parse URL
     url = request.url
     
     # Parse method

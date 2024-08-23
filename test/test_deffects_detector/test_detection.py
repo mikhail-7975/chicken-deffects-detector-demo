@@ -11,7 +11,7 @@ def test_valid_detection():
                        confidence_thres=0.05, 
                        iou_thres=0.2)
     
-    inp_img = cv2.imread('data/raw_images/img_7020570882495152157.jpg')
+    inp_img = cv2.imread('data/raw_images/segmentation_test.jpg')
     result = model(inp_img[:, :, ::-1])
     assert result is not None
 
@@ -19,8 +19,8 @@ def test_valid_detection():
     for res in result:
         result_json.append({
             'box': res['box'],
-            'score': str(res['score']),
-            'class_id': str(res['class_id'])
+            'score': float(res['score']),
+            'class_id': int(res['class_id'])
         })
     
     with open("tmp/detection_results.json", 'w') as f:

@@ -1,3 +1,4 @@
+import json
 from typing import List
 from typing import Dict
 
@@ -34,31 +35,28 @@ class NNRunner:
         # 0. Select central body
         central_body_image = self.central_body_segmentation_model(chicken_image)
         detection_raw_out = self.deffects_detection_model(central_body_image)
+
+        
+        
+        # with open("legs.json") as f:
+        #     json.dump(legs)
+        # with open("wings.json") as f:
+        #     json.dump(wings)
         return central_body_image, detection_raw_out
-        # 1. Detection
-        detection_raw_out = [
-            {
-                "type": "",
-                "bbox": "",
-                "confidence": ""
-            }
-        ]
+        # detection_raw_out = [
+        #     {
+        #         "box": [299, 351, 113, 109],
+        #         "score": "0.9612121",
+        #         "class_id": "4"
+        #     },
+        # ]
 
         # 1.1 Postprocessing: 
         # - check if detection out in deffects list
         # - localize
         # - append to detection_postprocessed_result
 
-        detection_postprocessed_result = [
-            {
-                "deffect_type":"open_brek",
-                "bbox": [], # xywh
-                "segmentation": [], #xyxyxy
-                "localization": "right_wing"
-            },
-
-        ]
-
+        
         # 2. Split to final dict with result
 
         result = {
