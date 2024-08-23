@@ -13,12 +13,13 @@ def test_valid_nn_runner():
         hematomes_segmentation_model_path='',
         deffects_detection_model_path='data/model_weights/yolov8_640x640_chicken_deffects_base.onnx',
     )
-    test_images = list(map(str, Path('data/raw_images').glob("*.jpg")))
+    test_images = ['data/raw_images/img_7020570882494890022.jpg']
+    # test_images = list(map(str, Path('data/raw_images').glob("*.jpg")))
     for img_path in test_images:
         inp_img = cv2.imread(img_path)
         result = runner(inp_img[:, :, ::-1])
         assert result is not None
-        out_image, detection_result = result
+        out_image, detection_result, processed_result = result
         color_palette = [
             (0, 0, 0),
             (255, 255, 255), # chicken_body
@@ -46,3 +47,5 @@ def test_valid_nn_runner():
                             color_palette, detect_names)
         
         cv2.imwrite(f"tmp/nn_runner_test_{img_path.split('_')[-1]}", out_image[:, :, ::-1])
+        with open(f"tmp/nn_runner_test_{img_path.split('_')[-1]}.json", 'w') as f:
+            json.dump(processed_result, f, skipkeys=True)

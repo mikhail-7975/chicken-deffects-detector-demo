@@ -76,8 +76,8 @@ class Yolov8Onnx:
             detection_results.append(
                 {
                     "box": box,
-                    "score": score,
-                    "class_id": class_id
+                    "score": float(score),
+                    "class_id": int(class_id)
                 }
             )
 

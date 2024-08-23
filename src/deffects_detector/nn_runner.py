@@ -6,8 +6,9 @@ import numpy as np
 
 from src.deffects_detector.nn_wrappers.unet_onnx_inference import UnetModel
 from src.deffects_detector.nn_wrappers.yolo_onnx_inference import Yolov8Onnx
-from src.deffects_detector.data_processing.central_body_segmentation import BodySegmentationProcessing
-
+from src.deffects_detector.data_processing.central_body_segmentation import BodySegmentationProcessing 
+from src.deffects_detector.utils.detection_postprocessing import split_deffects
+from src.deffects_detector.utils.detection_postprocessing import add_hematome_localization
 
 class NNRunner:
     def __init__(
@@ -37,43 +38,19 @@ class NNRunner:
         detection_raw_out = self.deffects_detection_model(central_body_image)
 
         
+        legs, wings, hematomes = split_deffects(detection_raw_out)
+        add_hematome_localization(hematomes, legs, wings)
         
-        # with open("legs.json") as f:
-        #     json.dump(legs)
-        # with open("wings.json") as f:
-        #     json.dump(wings)
-        return central_body_image, detection_raw_out
-        # detection_raw_out = [
-        #     {
-        #         "box": [299, 351, 113, 109],
-        #         "score": "0.9612121",
-        #         "class_id": "4"
-        #     },
-        # ]
-
-        # 1.1 Postprocessing: 
-        # - check if detection out in deffects list
-        # - localize
-        # - append to detection_postprocessed_result
-
-        
-        # 2. Split to final dict with result
-
         result = {
-            "body": [
-
-            ],
-            "left_leg": [
-
-            ],
-            "right_leg": [
-
-            ],
-            "left_wing": [
-
-            ],
-            "right_wing": [
-
-            ]
+            "body": [h for h in hematomes if h['localization'] == 'body'],
+            "left_leg": [legs[0]] + \
+                [h for h in hematomes if h['localization'] == 'left leg'],
+            "right_leg": [legs[1]] + \
+                [h for h in hematomes if h['localization'] == 'right leg'],
+            "left_wing": [wings[0]] + \
+                [h for h in hematomes if h['localization'] == 'left wing'],
+            "right_wing":  [wings[1]] + \
+                [h for h in hematomes if h['localization'] == 'right wing']
         }
-        pass
+        return central_body_image, detection_raw_out, result
+        
