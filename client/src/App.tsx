@@ -1,26 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.scss";
 import { Tab } from "./components/Tab";
 import { DescriptionBlock } from "./components/DescriptionBlock";
+import { ImagePanel } from "./components/ImagePanel";
+import { getDefaultImage, getImage } from "./api";
+import { DetectedImage, ImageType } from "./types";
+import { Input } from "antd";
 
 function App() {
-  const checkDBUserExist = async () => {
-    const response = await fetch("http://127.0.0.1:5000/post-example?id=2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({"login":"login"})
-    });
-    return await response.json();
+  const [detectedImage, setDetectedImage] = useState<DetectedImage>({
+    body: [],
+    back: [],
+    left_leg: [],
+    right_leg: [],
+    left_wing: [],
+    right_wing: [],
+    decision: "",
+  });
+  const getNewImage = (type: ImageType) => {
+    getImage(type)
+      .then((res: DetectedImage) => {
+        setDetectedImage(res);
+      })
+      .catch();
   };
-  const testFunction = async () => {
-    const response = await fetch("http://127.0.0.1:5000/?id=2",);
-    return await response.json();
-  };
-  // testFunction();
-  checkDBUserExist();
+  useEffect(() => {
+    getDefaultImage()
+      .then((res: DetectedImage) => {
+        setDetectedImage(res);
+      })
+      .catch();
+  }, []);
   return (
     <div className="App">
       <header className="App-header">Система сортировки куриных тушек</header>
@@ -44,32 +54,42 @@ function App() {
         <div className="resultPanel">
           <div className="leftBlock">
             <div>
-              <DescriptionBlock title="Передняя сторона голена слева" />
               <DescriptionBlock
-                title="Бедро слева"
-                type={"warning"}
-                message={"Изменен цвет кожных покровов"}
+                title="Ножка слева"
+                defectsDescription={detectedImage.left_leg}
               />
-              <DescriptionBlock title="Грудка / задняя часть" />
-              <DescriptionBlock title="Крыло слева" />
+              <DescriptionBlock
+                title="Грудка / задняя часть"
+                defectsDescription={[]}
+              />
+              <DescriptionBlock
+                title="Крыло слева"
+                defectsDescription={detectedImage.left_wing}
+              />
             </div>
             <div>
               <div className="resultBlock">
                 <h3>Принятие решения по качеству</h3>
+                <Input value={detectedImage.decision} disabled />
               </div>
             </div>
           </div>
           <div className="centerBlock">
             <h3>Вид в реальном времени</h3>
+            <ImagePanel getNewImage={getNewImage} />
           </div>
           <div className="rightBlock">
-            <DescriptionBlock title="Передняя сторона голена справа" />
-            <DescriptionBlock title="Бедро справа" />
-            <DescriptionBlock title="Целый" />
+            <DescriptionBlock
+              title="Ножка справа"
+              defectsDescription={detectedImage.right_leg}
+            />
+            <DescriptionBlock
+              title="Целый"
+              defectsDescription={detectedImage.body}
+            />
             <DescriptionBlock
               title="Крыло справа"
-              type={"error"}
-              message={"Сломана кость. Следы гематомы"}
+              defectsDescription={detectedImage.right_wing}
             />
           </div>
         </div>

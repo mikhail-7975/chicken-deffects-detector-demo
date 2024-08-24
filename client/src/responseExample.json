@@ -1,0 +1,39 @@
+{
+  "image": "bin",
+  "body": [
+    {
+      "defect_type":"hematome",
+      "message":"Гематомаы",
+      "color": "yellow"
+
+    }
+  ],
+  "left_leg": [],
+  "right_leg": [
+    {
+      "defect_type":"leg_not_fixed",
+      "message":"нога не зафиксирована",
+      "color": "yellow"
+    },
+    {
+      "defect_type":"hematome",
+      "message":"Гематомаы",
+      "color": "yellow"
+
+    }
+  ],
+  "left_wing": [
+    {
+      "defect_type":"open_break",
+      "message":"открытый перелом",
+      "color": "red"
+    }
+  ],
+  "right_wing": [
+    {
+      "defect_type":"closed_break",
+      "message":"закрытый перелом",
+      "color":"yellow"
+    }
+  ]
+}

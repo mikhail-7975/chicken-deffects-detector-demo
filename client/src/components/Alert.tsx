@@ -1,6 +1,7 @@
 import React from "react";
-import { AlertProps as AntdAlertProps, Alert as AntdAlert } from "antd";
+import { Alert as AntdAlert } from "antd";
 import styles from "./Alert.module.scss";
+import { AlertProps } from "../types";
 
 export const Alert = (props: AlertProps) => (
   <AntdAlert
@@ -8,7 +9,3 @@ export const Alert = (props: AlertProps) => (
     className={`${styles.alert} ${props.className ?? ""}`}
   />
 );
-
-export type AlertProps = Omit<AntdAlertProps, "type"> & {
-  type: "success" | "warning" | "error";
-};
