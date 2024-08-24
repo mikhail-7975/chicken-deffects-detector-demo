@@ -1,5 +1,5 @@
 export const getImage = async (type: "next" | "previous") => {
-  const response = await fetch(`"http://127.0.0.1:5000/image?type=" + ${type}`);
+  const response = await fetch("http://127.0.0.1:5000/image?type=" + type);
   return await response.json();
 };
 

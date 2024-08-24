@@ -25,7 +25,7 @@ function App() {
       .catch();
   };
   useEffect(() => {
-    getDefaultImage()
+    getImage("next")
       .then((res: DetectedImage) => {
         setDetectedImage(res);
       })

@@ -21,7 +21,7 @@ export const ImagePanel = ({
         <div className={styles.controlPanel}>
           <Button
             type="primary"
-            disabled
+            // disabled
             icon={<BackwardOutlined />}
             onClick={() => getNewImage("previous")}
           >
@@ -32,7 +32,7 @@ export const ImagePanel = ({
           </Button>
           <Button
             type="primary"
-            disabled
+            // disabled
             icon={<ForwardOutlined />}
             onClick={() => getNewImage("next")}
           >
