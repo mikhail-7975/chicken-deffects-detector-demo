@@ -4,26 +4,28 @@ import {
   PauseOutlined,
 } from "@ant-design/icons";
 import { Button } from "./Button";
-import { useState } from "react";
 import styles from "./ImagePanel.module.scss";
 import { ImageType } from "../types";
 
 export const ImagePanel = ({
   getNewImage,
+  data,
+  prevIsDisabled,
 }: {
-  getNewImage: (type: ImageType) => void;
+  getNewImage: (type: ImageType, enablePrevButton: boolean) => void;
+  data: string;
+  prevIsDisabled: boolean;
 }) => {
-  const [image, setImage] = useState<{ name: string; path: string }>();
   return (
     <>
       <div className={styles.imagePanel}>
-        <img src={image?.path} alt={image?.name} />
+        <img src={`data:image/jpeg;base64,${data}`} alt={"Куриная тушка"} />
         <div className={styles.controlPanel}>
           <Button
             type="primary"
-            // disabled
+            disabled={prevIsDisabled}
             icon={<BackwardOutlined />}
-            onClick={() => getNewImage("previous")}
+            onClick={() => getNewImage("previous", true)}
           >
             Предыдущее
           </Button>
@@ -32,9 +34,8 @@ export const ImagePanel = ({
           </Button>
           <Button
             type="primary"
-            // disabled
             icon={<ForwardOutlined />}
-            onClick={() => getNewImage("next")}
+            onClick={() => getNewImage("next", true)}
           >
             Следующее
           </Button>

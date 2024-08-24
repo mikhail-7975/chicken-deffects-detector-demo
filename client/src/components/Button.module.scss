@@ -3,41 +3,10 @@
   justify-content: center;
   align-items: center;
 
-  &:global(.ant-btn-icon-only:not(.ant-btn-primary,:hover)) {
-    color: #777; // Кнопки только с иконкой по умолчанию раскрашивают иконку в черный цвет - слишком ярко
-  }
-
   svg {
     font-size: 16px;
   }
 
-  &.black {
-    color: #fff;
-    background-color: #5e5e5e;
-    border-color: #454545;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      color: #fff;
-      background-color: #454545;
-      border-color: #262626;
-    }
-  }
-
-  &.black-light {
-    border-color: #454545;
-    color: #454545;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      border-color: #969595;
-      color: #969595;
-    }
-  }
 
   &.primary {
     color: #fff;
@@ -54,19 +23,6 @@
     }
   }
 
-  &.primary-light {
-    border-color: #2e6da4;
-    color: #2e6da4;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      border-color: #74a3cb;
-      color: #74a3cb;
-    }
-  }
-
   &.default {
     color: #333;
     background-color: #fff;
@@ -79,49 +35,6 @@
       color: #333;
       background-color: #e6e6e6;
       border-color: #adadad;
-    }
-  }
-
-  &.default-light {
-    border-color: #adadad;
-    background-color: #e6e6e6;
-    color: #333;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      background-color: #fff;
-      border-color: #adadad;
-      color: #adadad;
-    }
-  }
-
-  &.info {
-    color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      color: #fff;
-      background-color: #31b0d5;
-      border-color: #269abc;
-    }
-  }
-
-  &.info-light {
-    border-color: #46b8da;
-    color: #46b8da;
-
-    &:hover,
-    &:focus,
-    &.focus,
-    &:active {
-      border-color: #a6ddee;
-      color: #a6ddee;
     }
   }
 

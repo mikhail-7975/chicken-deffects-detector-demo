@@ -5,7 +5,9 @@ import { DescriptionBlock } from "./components/DescriptionBlock";
 import { ImagePanel } from "./components/ImagePanel";
 import { getDefaultImage, getImage } from "./api";
 import { DetectedImage, ImageType } from "./types";
-import { Input } from "antd";
+import { Input, Skeleton, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Alert } from "./components/Alert";
 
 function App() {
   const [detectedImage, setDetectedImage] = useState<DetectedImage>({
@@ -17,20 +19,37 @@ function App() {
     right_wing: [],
     decision: "",
   });
-  const getNewImage = (type: ImageType) => {
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [prevIsDisabled, setPrevIsDisabled] = useState<boolean>(true);
+
+  const getNewImage = (type: ImageType, enablePrevButton: boolean) => {
+    setIsLoading(true);
+    setError("");
     getImage(type)
       .then((res: DetectedImage) => {
         setDetectedImage(res);
+        if (type === "next" && enablePrevButton) setPrevIsDisabled(false);
       })
-      .catch();
+      .catch((e) => setError(e.message || "Произошла ошибка. Попробуйте снова"))
+      .finally(() => setIsLoading(false));
   };
+
   useEffect(() => {
-    getImage("next")
+    setIsLoading(true);
+    setError("");
+    getDefaultImage()
       .then((res: DetectedImage) => {
         setDetectedImage(res);
       })
-      .catch();
+      .catch((e) => setError(e.message || "Произошла ошибка. Попробуйте снова"))
+      .finally(() => setIsLoading(false));
   }, []);
+
+  // useEffect(() => {
+  //   getNewImage("next", false);
+  // }, []);
+
   return (
     <div className="App">
       <header className="App-header">Система сортировки куриных тушек</header>
@@ -57,39 +76,65 @@ function App() {
               <DescriptionBlock
                 title="Ножка слева"
                 defectsDescription={detectedImage.left_leg}
+                isLoading={isLoading || !!error}
               />
               <DescriptionBlock
                 title="Грудка / задняя часть"
                 defectsDescription={[]}
+                isLoading={isLoading || !!error}
               />
               <DescriptionBlock
                 title="Крыло слева"
                 defectsDescription={detectedImage.left_wing}
+                isLoading={isLoading || !!error}
               />
             </div>
             <div>
               <div className="resultBlock">
                 <h3>Принятие решения по качеству</h3>
-                <Input value={detectedImage.decision} disabled />
+                {isLoading || !!error ? (
+                  <Skeleton active />
+                ) : (
+                  <Input value={detectedImage.decision} disabled />
+                )}
               </div>
             </div>
           </div>
           <div className="centerBlock">
             <h3>Вид в реальном времени</h3>
-            <ImagePanel getNewImage={getNewImage} />
+            {isLoading ? (
+              <div style={{ marginTop: "30px" }}>
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                />
+              </div>
+            ) : !!error ? (
+              <Alert type={"error"} message={error} />
+            ) : (
+              detectedImage.image && (
+                <ImagePanel
+                  getNewImage={getNewImage}
+                  data={detectedImage.image}
+                  prevIsDisabled={prevIsDisabled}
+                />
+              )
+            )}
           </div>
           <div className="rightBlock">
             <DescriptionBlock
               title="Ножка справа"
               defectsDescription={detectedImage.right_leg}
+              isLoading={isLoading || !!error}
             />
             <DescriptionBlock
               title="Целый"
               defectsDescription={detectedImage.body}
+              isLoading={isLoading || !!error}
             />
             <DescriptionBlock
               title="Крыло справа"
               defectsDescription={detectedImage.right_wing}
+              isLoading={isLoading || !!error}
             />
           </div>
         </div>

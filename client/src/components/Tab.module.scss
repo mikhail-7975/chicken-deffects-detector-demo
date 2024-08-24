@@ -1,5 +1,5 @@
 .tabLink {
-  padding: 0 32px 0 32px;
+  padding: 0 50px;
   cursor: pointer;
   color: #cccccc;
   border-bottom: 1px solid #cccccc;
@@ -11,7 +11,7 @@
   }
 
   &.active {
-    padding: 0 20px 2px 20px;
+    padding: 0 50px 2px 50px;
     cursor: default;
     color: #367aaf;
     font-weight: bold;

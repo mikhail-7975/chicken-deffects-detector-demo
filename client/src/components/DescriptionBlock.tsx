@@ -2,10 +2,11 @@ import { Alert } from "./Alert";
 import React from "react";
 import styles from "./DescriptionBlock.module.scss";
 import { AlertProps, DetectionInfo } from "../types";
+import { Skeleton } from "antd";
 
 export const DescriptionAlert = ({
   type = "success",
-  message = "Дефектов нет",
+  message = "Дефекты не обнаружены",
 }: DescriptionAlertProps) => {
   return <Alert type={type} message={message} />;
 };
@@ -13,15 +14,19 @@ export const DescriptionAlert = ({
 export const DescriptionBlock = ({
   title,
   defectsDescription,
+  isLoading = false,
 }: {
   title: string;
   defectsDescription: DetectionInfo[];
+  isLoading: boolean;
 }) => {
   return (
     <div className={styles.block}>
       <h3>{title}</h3>
-      {defectsDescription.length === 0 ? (
-        <DescriptionAlert type={"info"} message={"Нет данных"} />
+      {isLoading ? (
+        <Skeleton active />
+      ) : defectsDescription.length === 0 ? (
+        <DescriptionAlert type={"info"} message={"Дефекты не обнаружены"} />
       ) : (
         defectsDescription.map((defect) => {
           return (
