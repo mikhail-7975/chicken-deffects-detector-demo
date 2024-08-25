@@ -35,20 +35,20 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    setError("");
-    getDefaultImage()
-      .then((res: DetectedImage) => {
-        setDetectedImage(res);
-      })
-      .catch((e) => setError(e.message || "Произошла ошибка. Попробуйте снова"))
-      .finally(() => setIsLoading(false));
-  }, []);
-
   // useEffect(() => {
-  //   getNewImage("next", false);
+  //   setIsLoading(true);
+  //   setError("");
+  //   getDefaultImage()
+  //     .then((res: DetectedImage) => {
+  //       setDetectedImage(res);
+  //     })
+  //     .catch((e) => setError(e.message || "Произошла ошибка. Попробуйте снова"))
+  //     .finally(() => setIsLoading(false));
   // }, []);
+
+  useEffect(() => {
+    getNewImage("next", false);
+  }, []);
 
   return (
     <div className="App">
