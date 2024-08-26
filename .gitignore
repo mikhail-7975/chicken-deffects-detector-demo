@@ -166,3 +166,4 @@ notebooks/
 *.onnx
 tmp/
 *.yaml
+*node_modules*
