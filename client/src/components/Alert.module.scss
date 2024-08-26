@@ -1,0 +1,34 @@
+.alert {
+  &:global(.ant-alert) {
+    border-radius: 0;
+    margin-bottom: 20px;
+  }
+
+  &:global(.ant-alert-success) :global(.ant-alert-message) {
+    color: #417505;
+  }
+
+  &:global(.ant-alert-info .ant-alert-message) {
+    color: #556872;
+  }
+
+  &:global(.ant-alert-info) {
+    background-color: #f0f0f0;
+    border: 1px solid #bfbfbf;
+
+    :global(.ant-alert-message) {
+      color: #888;
+    }
+  }
+
+  &:global(.ant-alert-warning .ant-alert-message) {
+    color: #8a704d;
+  }
+
+  &:global(.ant-alert-error .ant-alert-message) {
+    color: #902828;
+  }
+}
+
+
+

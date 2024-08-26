@@ -1,0 +1,57 @@
+.Button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    font-size: 16px;
+  }
+
+
+  &.primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active {
+      color: #fff;
+      background-color: #286090;
+      border-color: #204d74;
+    }
+  }
+
+  &.default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
+  }
+
+  &.danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    margin: 0 10px;
+
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active {
+      color: #fff;
+      background-color: #c9302c;
+      border-color: #ac2925;
+    }
+  }
+
+}
