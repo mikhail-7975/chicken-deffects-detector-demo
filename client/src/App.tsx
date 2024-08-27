@@ -79,8 +79,8 @@ function App() {
                 isLoading={isLoading || !!error}
               />
               <DescriptionBlock
-                title="Грудка / задняя часть"
-                defectsDescription={[]}
+                title="Грудка"
+                defectsDescription={detectedImage.body}
                 isLoading={isLoading || !!error}
               />
               <DescriptionBlock
@@ -128,7 +128,7 @@ function App() {
             />
             <DescriptionBlock
               title="Целый"
-              defectsDescription={detectedImage.body}
+              defectsDescription={[]}
               isLoading={isLoading || !!error}
             />
             <DescriptionBlock
